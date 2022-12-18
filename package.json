@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.20.4",
     "lodash-es": "^4.17.21",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
