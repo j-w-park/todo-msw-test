@@ -14,15 +14,15 @@ export const TodoItem = (props: { todoKey: string }) => {
         onChange={(e) => {
           setTodo((prev) => ({ ...prev, text: e.target.value }));
         }}
-        disabled={todo.isComplete}
+        disabled={todo.done}
       />
 
       <button
         onClick={() => {
-          setTodo((prev) => ({ ...prev, isComplete: !prev.isComplete }));
+          setTodo((prev) => ({ ...prev, done: !prev.done }));
         }}
       >
-        {todo.isComplete ? "✅" : "🔲"}
+        {todo.done ? "✅" : "🔲"}
       </button>
 
       <button

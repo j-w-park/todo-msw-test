@@ -13,7 +13,7 @@ export const AddTodoForm = () => {
     }
     const todoKey = nanoid();
     set(todoKeysAtom, (prev) => [...prev, todoKey]);
-    set(todoAtom(todoKey), { title: todoInputElement.value, isComplete: false });
+    set(todoAtom(todoKey), { title: todoInputElement.value, done: false });
     todoInputElement.focus();
   });
 
