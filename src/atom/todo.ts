@@ -1,18 +1,15 @@
 import { atom, atomFamily } from "recoil";
+import { Todo } from "../mocks/types";
 
-type TodoState = {
-  title: string;
-  done: boolean;
-};
-
-export const todoKeysAtom = atom<string[]>({
-  key: "atom/todoKeys",
+export const todoListAtom = atom<Todo[]>({
+  key: "atom/todoList",
   default: [],
 });
 
-export const todoAtom = atomFamily<TodoState, string>({
-  key: "todo",
+export const todoItemAtom = atomFamily<Todo, Todo["id"]>({
+  key: "atom/todoItem",
   default: {
+    id: "",
     title: "",
     done: false,
   },

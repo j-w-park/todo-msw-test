@@ -1,14 +1,20 @@
+import _ from "lodash-es";
+import { useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { todoAtom, todoKeysAtom } from "./atom/todo";
+import { todoItemAtom, todoListAtom } from "./atom/todo";
+import { Todo } from "./mocks/types";
 
-export const TodoItem = (props: { todoKey: string }) => {
-  const [todo, setTodo] = useRecoilState(todoAtom(props.todoKey));
+export const TodoItem = (props: { todo: Todo }) => {
+  const [todo, setTodo] = useRecoilState(todoItemAtom(props.todo.id));
 
-  const setTodoKeys = useSetRecoilState(todoKeysAtom);
+  const setTodoList = useSetRecoilState(todoListAtom);
+
+  const titleRef = useRef<HTMLInputElement>(null);
 
   return (
     <li>
       <input
+        ref={titleRef}
         type="text"
         value={todo.title}
         onChange={(e) => {
@@ -22,12 +28,12 @@ export const TodoItem = (props: { todoKey: string }) => {
           setTodo((prev) => ({ ...prev, done: !prev.done }));
         }}
       >
-        {todo.done ? "✅" : "🔲"}
+        {props.todo.done ? "✅" : "🔲"}
       </button>
 
       <button
         onClick={() => {
-          setTodoKeys((prev) => prev.filter((key) => key !== props.todoKey));
+          setTodoList((prev) => _.filter(prev, { id: props.todo.id }));
         }}
       >
         🗑
