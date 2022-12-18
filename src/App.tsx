@@ -1,22 +1,17 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AddTodoForm } from "./AddTodoForm";
-import { todoKeysAtom } from "./atom/todo";
-import { TodoItem } from "./TodoItem";
+import { TodoList } from "./TodoList";
 
 export const App = () => {
-  const todoKeys = useRecoilValue(todoKeysAtom);
-
   return (
     <div>
       <h1>Todo List</h1>
 
       <AddTodoForm />
 
-      <ul>
-        {todoKeys.map((todoKey) => (
-          <TodoItem key={todoKey} todoKey={todoKey} />
-        ))}
-      </ul>
+      <TodoList />
+
+      <ReactQueryDevtools />
     </div>
   );
 };
