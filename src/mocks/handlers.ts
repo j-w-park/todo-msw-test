@@ -58,8 +58,7 @@ export const mockRepository = {
 
   addTodo: rest.post("/todo", async (request, response, context) => {
     const { title } = await request.json<{ title: string }>();
-    addTodo(title);
-    return response(context.status(200), context.json(null));
+    return response(context.status(200), context.json(addTodo(title)));
   }),
 
   // 요청 경로를 파라미터로 받기 위해 :paramName 형식을 사용한다.
@@ -67,8 +66,10 @@ export const mockRepository = {
   updateTodo: rest.put("/todo/:id", async (request, response, context) => {
     const { done, title } = await request.json<Pick<Todo, "done" | "title">>();
     try {
-      updateTodo(request.params.id as string, title, done);
-      return response(context.status(200), context.json(null));
+      return response(
+        context.status(200),
+        context.json(updateTodo(request.params.id as string, title, done))
+      );
     } catch (e) {
       if (e instanceof Error) {
         return response(
@@ -82,8 +83,10 @@ export const mockRepository = {
 
   deleteTodo: rest.delete("/todo/:id", async (request, response, context) => {
     try {
-      deleteTodo(request.params.id as string);
-      return response(context.status(200), context.json(null));
+      return response(
+        context.status(200),
+        context.json(deleteTodo(request.params.id as string))
+      );
     } catch (e) {
       if (e instanceof Error) {
         return response(
