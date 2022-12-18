@@ -10,7 +10,7 @@ export const TodoItem = (props: { todoKey: string }) => {
     <li>
       <input
         type="text"
-        value={todo.text}
+        value={todo.title}
         onChange={(e) => {
           setTodo((prev) => ({ ...prev, text: e.target.value }));
         }}

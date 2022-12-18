@@ -1,7 +1,7 @@
 import { atom, atomFamily } from "recoil";
 
 type TodoState = {
-  text: string;
+  title: string;
   isComplete: boolean;
 };
 
@@ -13,7 +13,7 @@ export const todoKeysAtom = atom<string[]>({
 export const todoAtom = atomFamily<TodoState, string>({
   key: "todo",
   default: {
-    text: "",
+    title: "",
     isComplete: false,
   },
 });
