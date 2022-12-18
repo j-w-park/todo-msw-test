@@ -4,7 +4,7 @@ import { RecoilRoot } from "recoil";
 import { App } from "./App";
 
 const initialize = async () => {
-  if (process.env.NODE_ENV === "development") {
+  if (import.meta.env.DEV) {
     const { worker } = await import("./mocks/browser");
     return worker.start();
   }
