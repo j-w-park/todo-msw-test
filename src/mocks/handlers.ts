@@ -47,7 +47,7 @@ export const mockRepository = {
   // response: 모킹된 응답을 생성하는 유틸리티 함수
   // context: 응답의 상태 코드, 헤더, 바디 등을 설정하는 함수들을 제공하는 객체
 
-  getTodoList: rest.get("/todo", (request, response, context) => {
+  getTodoList: rest.get("https://www.example.com/todo", (request, response, context) => {
     return response(
       context.status(200),
       context.json(
