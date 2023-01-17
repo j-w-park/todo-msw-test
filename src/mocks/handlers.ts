@@ -1,45 +1,7 @@
 import { rest } from "msw";
-import { nanoid } from "nanoid";
 import _ from "lodash-es";
 import { Todo } from "./types";
-
-const todoContainer = new Map<Todo["id"], Todo>();
-
-const addTodo = (title: string): Todo => {
-  let newTodoId = nanoid();
-  while (todoContainer.has(newTodoId)) {
-    newTodoId = nanoid();
-  }
-  const newTodo = { id: newTodoId, title, done: false };
-  todoContainer.set(newTodo.id, newTodo);
-  return newTodo;
-};
-
-const updateTodo = (id: string, title: string, done: boolean): Todo => {
-  const todo = todoContainer.get(id);
-  if (todo === undefined) {
-    throw new Error("item not found");
-  }
-  todoContainer.set(id, { id, title, done });
-  return { id, title, done };
-};
-
-const deleteTodo = (id: string): Todo => {
-  const todo = todoContainer.get(id);
-  if (todo === undefined) {
-    throw new Error("item not found");
-  }
-  todoContainer.delete(id);
-  return todo;
-};
-
-addTodo("빨래");
-addTodo("청소");
-addTodo("밥먹기");
-addTodo("코딩하기");
-addTodo("숨쉬기");
-addTodo("잠자기");
-addTodo("놀기");
+import { addTodo, deleteTodo, getTodoList, updateTodo } from "./todo";
 
 // mock API
 export const mockRepository = {
@@ -47,13 +9,8 @@ export const mockRepository = {
   // response: 모킹된 응답을 생성하는 유틸리티 함수
   // context: 응답의 상태 코드, 헤더, 바디 등을 설정하는 함수들을 제공하는 객체
 
-  getTodoList: rest.get("https://www.example.com/todo", (request, response, context) => {
-    return response(
-      context.status(200),
-      context.json(
-        _.map<Todo>(Array.from(todoContainer.entries(), ([_, todo]) => todo))
-      )
-    );
+  getTodoList: rest.get("/todo", (_, response, context) => {
+    return response(context.status(200), context.json(getTodoList()));
   }),
 
   addTodo: rest.post("/todo", async (request, response, context) => {
